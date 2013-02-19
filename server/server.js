@@ -1,3 +1,9 @@
+var fs = require('fs');
+var http = require('https');
+var privateKey  = fs.readFileSync('cert/privatekey.pem').toString();
+var certificate = fs.readFileSync('cert/certificate.pem').toString();
+var credentials = {key: privateKey, cert: certificate};
+
 var express = require('express');
 var mongoProxy = require('./lib/mongo-proxy');
 var config = require('./config.js');
@@ -6,6 +12,7 @@ var security = require('./lib/security');
 require('express-namespace');
 
 var app = express();
+var https = http.createServer(credentials, app);
 
 // Serve up the favicon
 app.use(express.favicon(config.server.distFolder + '/favicon.ico'));
@@ -81,5 +88,5 @@ app.all('/*', function(req, res) {
 app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
 // Start up the server on the port specified in the config
-app.listen(config.server.listenPort);
+https.listen(config.server.listenPort);
 console.log('Angular App Server - listening on port: ' + config.server.listenPort);

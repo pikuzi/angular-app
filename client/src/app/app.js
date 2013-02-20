@@ -11,7 +11,7 @@ angular.module('app', [
   'templates']);
 
 angular.module('app').constant('MONGOLAB_CONFIG', {
-  baseUrl: 'https://localhost:3000/databases/',
+  baseUrl: '/databases/',
   dbName: 'ascrum'
 });
 

@@ -23,7 +23,7 @@ runnerPort = 9100;
 urlRoot = '/__testacular/';
 
 proxies = {
-  '/': 'http://localhost:3000/'
+  '/': 'https://localhost:3000/'
 };
 
 // enable / disable colors in the output (reporters and logs)

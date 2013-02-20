@@ -1,5 +1,6 @@
 var fs = require('fs');
-var http = require('https');
+var http = require('http');
+var https = require('https');
 var privateKey  = fs.readFileSync('cert/privatekey.pem').toString();
 var certificate = fs.readFileSync('cert/certificate.pem').toString();
 var credentials = {key: privateKey, cert: certificate};
@@ -12,7 +13,8 @@ var security = require('./lib/security');
 require('express-namespace');
 
 var app = express();
-var https = http.createServer(credentials, app);
+var https = https.createServer(credentials, app);
+var http = http.createServer(app);
 
 // Serve up the favicon
 app.use(express.favicon(config.server.distFolder + '/favicon.ico'));
@@ -88,5 +90,7 @@ app.all('/*', function(req, res) {
 app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
 // Start up the server on the port specified in the config
-https.listen(config.server.listenPort);
+http.listen(config.server.listenPort);
 console.log('Angular App Server - listening on port: ' + config.server.listenPort);
+https.listen(config.server.securePort);
+console.log('Angular App Server - listening on secure port: ' + config.server.securePort);

@@ -47,3 +47,4 @@ autoWatchInterval = 0;
 // - Safari
 // - PhantomJS
 browsers = [];
+

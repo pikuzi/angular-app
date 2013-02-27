@@ -11,12 +11,12 @@ files = [
   'test/vendor/angular/angular-mocks.js',
   'src/**/*.js',
   'test/unit/**/*.spec.js',
-  'dist/tmp/**/*.js'
+  'dist/templates/**/*.js'
 ];
 
 // use dots reporter, as travis terminal does not support escaping sequences
 // possible values: 'dots' || 'progress'
-reporters = 'progress';
+reporter = 'progress';
 
 // these are default values, just to show available options
 
@@ -49,3 +49,7 @@ autoWatchInterval = 0;
 // - Safari
 // - PhantomJS
 browsers = ['Chrome'];
+
+// Continuous Integration mode
+// if true, it capture browsers, run tests and exit
+singleRun = true;

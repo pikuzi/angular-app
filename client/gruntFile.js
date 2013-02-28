@@ -19,6 +19,17 @@ module.exports = function (grunt) {
     grunt.log.subhead(Date());
   });
 
+  var testacularConfig = function(configFile) {
+    var options = {
+      configFile: configFile,
+      keepalive: true
+    };
+    if ( process.env.TRAVIS ) {
+      options.browsers = ['Firefox'];
+    }
+    return options;
+  };
+
   // Project configuration.
   grunt.initConfig({
     distdir: 'dist',
@@ -46,8 +57,8 @@ module.exports = function (grunt) {
       }
     },
     testacular: {
-      unit: { options: { configFile: 'test/config/unit.js', keepalive: true } },
-      e2e: { options: { configFile: 'test/config/e2e.js', keepalive: true } }
+      unit: { options: testacularConfig('test/config/unit.js') },
+      e2e: { options: testacularConfig('test/config/e2e.js') }
     },
     html2js: {
       app: {

@@ -21,10 +21,10 @@ reporter = 'progress';
 // these are default values, just to show available options
 
 // web server port
-port = 8080;
+port = 8089;
 
 // cli runner port
-runnerPort = 9100;
+runnerPort = 9109;
 
 urlRoot = '/__testacular/';
 

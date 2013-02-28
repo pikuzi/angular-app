@@ -11,8 +11,8 @@ module.exports = function (grunt) {
 
   // Default task.
   grunt.registerTask('default', ['jshint','build','testacular:unit']);
-  grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy']);
-  grunt.registerTask('release', ['clean','html2js','uglify','jshint','testacular:unit','recess:min','copy','testacular:e2e']);
+  grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy:assets']);
+  grunt.registerTask('release', ['clean','html2js','uglify','jshint','testacular:unit','concat:index', 'recess:min','copy:assets','testacular:e2e']);
 
   // Print a timestamp (useful for when watching)
   grunt.registerTask('timestamp', function() {
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
     ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;\n' +
     ' * Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>\n */\n',
     src: {
-      js: ['src/**/*.js', 'dist/tmp/**/*.js'],
+      js: ['src/**/*.js', '<%= distdir %>/templates/**/*.js'],
       specs: ['test/**/*.spec.js'],
       scenarios: ['test/**/*.scenario.js'],
       html: ['src/index.html'],
@@ -42,7 +42,7 @@ module.exports = function (grunt) {
     clean: ['<%= distdir %>/*'],
     copy: {
       assets: {
-        files: {'<%= distdir %>/': 'src/assets/**'}
+        files: [{ dest: '<%= distdir %>', src : '**', expand: true, cwd: 'src/assets/' }]
       }
     },
     testacular: {
@@ -55,14 +55,16 @@ module.exports = function (grunt) {
           base: 'src/app'
         },
         src: ['<%= src.tpl.app %>'],
-        dest: 'dist/templates/app-templates.js'
+        dest: '<%= distdir %>/templates/app.js',
+        module: 'templates.app'
       },
       common: {
         options: {
           base: 'src/common'
         },
         src: ['<%= src.tpl.common %>'],
-        dest: 'dist/templates/common-templates.js'
+        dest: '<%= distdir %>/templates/common.js',
+        module: 'templates.common'
       }
     },
     concat:{

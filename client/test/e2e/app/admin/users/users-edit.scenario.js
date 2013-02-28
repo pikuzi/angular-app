@@ -1,4 +1,4 @@
-xdescribe('admin edit user', function() {
+describe('admin edit user', function() {
 
   beforeEach(function() {
     browser().navigateTo('/admin/users/new');
